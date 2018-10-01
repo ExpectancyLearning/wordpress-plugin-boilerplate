@@ -1,15 +1,15 @@
 <?php
-namespace MyPlugin;
+namespace Expectancy\MyPlugin;
 
 /**
- * Plugin Name: My Plugin
+ * Plugin Name: WordPress Plugin
  * Plugin URI: http://www.example.com
  * Description: What the plugin does.
- * Version: 0.1.0
- * Author: Martin Himmel
- * Author URI: http://www.martyhimmel.me
+ * Version: 1.0.0
+ * Author: Expectancy Learning
  * Text Domain: my-plugin-text
  * Domain Path: /languages
+ * GitHub Plugin URI: https://github.com/ExpectancyLearning/wordpress-plugin-boilerplate
  */
 
 defined('ABSPATH') or die(__('You shall not pass!', 'my-plugin-text'));
@@ -30,14 +30,14 @@ class My_Plugin {
 		$this->load_classes();
 
 		if (is_admin()) {
-			new \MyPlugin\Admin();
+			new \Expectancy\MyPlugin\Admin();
 		} else {
 			add_action('wp_enqueue_scripts', [$this, 'register_scripts']);
 			add_action('wp_enqueue_scripts', [$this, 'register_styles']);
-			new \MyPlugin\Shortcode();
+			new \Expectancy\MyPlugin\Shortcode();
 		}
 
-		new \MyPlugin\Ajax();
+		new \Expectancy\MyPlugin\Ajax();
 	}
 
 	/**
@@ -48,7 +48,7 @@ class My_Plugin {
 			return;
 		}
 
-		$db = new \MyPlugin\Database();
+		$db = new \Expectancy\MyPlugin\Database();
 		$db->handle_tables();
 	}
 

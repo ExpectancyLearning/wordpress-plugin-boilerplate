@@ -1,5 +1,5 @@
 <?php
-namespace MyPlugin;
+namespace Expectancy\MyPlugin;
 
 defined('ABSPATH') or die(__('You shall not pass!', 'my-plugin-text'));
 
@@ -18,7 +18,7 @@ class Example_Model {
      */
     public static function all() {
         global $wpdb;
-        $table = $wpdb->prefix . \MyPlugin\Database::NAME_OF_TABLE;
+        $table = $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE;
         $rows = $wpdb->get_results("SELECT * FROM $table");
         if (empty($rows)) {
             return new \WP_Error(
@@ -52,7 +52,7 @@ class Example_Model {
      */
     public static function find($id) {
         global $wpdb;
-        $table = $wpdb->prefix . \MyPlugin\Database::NAME_OF_TABLE;
+        $table = $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE;
         $row = $wpdb->get_row($wpdb->prepare(
             "SELECT * FROM $table
             WHERE id = %d",
@@ -88,7 +88,7 @@ class Example_Model {
     private function create_new_model() {
         global $wpdb;
         $success = $wpdb->insert(
-            $wpdb->prefix . \MyPlugin\Database::NAME_OF_TABLE,
+            $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE,
             $this->format_data_for_saving(),
             $this->database_formats()
         );
@@ -114,7 +114,7 @@ class Example_Model {
     private function update_model() {
         global $wpdb;
         return $wpdb->update(
-            $wpdb->prefix . \MyPlugin\Database::NAME_OF_TABLE,
+            $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE,
             $this->format_data_for_saving(),
             ['id' => $this->id],
             $this->database_formats(),
@@ -129,7 +129,7 @@ class Example_Model {
     public function delete() {
         global $wpdb;
         return $wpdb->delete(
-            $wpdb->prefix . \MyPlugin\Database::NAME_OF_TABLE,
+            $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE,
             ['id' => $this->id],
             ['%d']
         );

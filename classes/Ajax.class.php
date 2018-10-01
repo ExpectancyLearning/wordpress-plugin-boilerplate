@@ -1,5 +1,5 @@
 <?php
-namespace MyPlugin;
+namespace Expectancy\MyPlugin;
 
 defined('ABSPATH') or die(__('You shall not pass!', 'my-plugin-text'));
 

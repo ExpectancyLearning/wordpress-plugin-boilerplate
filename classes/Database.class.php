@@ -1,5 +1,5 @@
 <?php
-namespace MyPlugin;
+namespace Expectancy\MyPlugin;
 
 defined('ABSPATH') or die(__('You shall not pass!', 'my-plugin-text'));
 
@@ -7,7 +7,7 @@ class Database {
 
     /**
      * Each custom table name should be declared as its own `const`.
-     * Access the table name where needed as `\MyPlugin\Database::NAME_OF_TABLE`.
+     * Access the table name where needed as `\Expectancy\MyPlugin\Database::NAME_OF_TABLE`.
      */
     const NAME_OF_TABLE = 'my_custom_table';
 
