@@ -69,7 +69,7 @@ class Admin {
 		wp_register_script(
 			'my_plugin_admin_scripts',
 			MY_PLUGIN_URL . 'js/admin/core.js',
-			['dependency1', 'dependency2', 'etc...']
+			[ /*  'dependency1', 'dependency2', 'etc...'  */ ]
 		);
 	}
 
