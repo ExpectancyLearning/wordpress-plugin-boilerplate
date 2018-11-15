@@ -1,16 +1,17 @@
 <?php
-namespace Expectancy\MyPlugin;
-
 /**
  * Plugin Name: WordPress Plugin
  * Plugin URI: http://www.example.com
  * Description: What the plugin does.
  * Version: 1.0.0
  * Author: Expectancy Learning
+ * Author URI: https://www.expectancylearning.com
  * Text Domain: my-plugin-text
  * Domain Path: /languages
  * GitHub Plugin URI: https://github.com/ExpectancyLearning/wordpress-plugin-boilerplate
  */
+
+namespace Expectancy\MyPlugin;
 
 defined('ABSPATH') or die(__('You shall not pass!', 'my-plugin-text'));
 
@@ -20,7 +21,12 @@ define('MY_PLUGIN_URL', plugins_url('/', __FILE__));
 
 class My_Plugin {
 
+	private $plugin_data;
+
 	public function __construct() {
+		// collect plugin data for JS and CSS file versioning
+		$this->plugin_data = get_plugin_data(__FILE__);
+
 		register_activation_hook(__FILE__, [$this, 'activate_plugin']);
 		register_deactivation_hook(__FILE__, [$this, 'deactivate_plugin']);
 
@@ -35,6 +41,7 @@ class My_Plugin {
 			add_action('wp_enqueue_scripts', [$this, 'register_scripts']);
 			add_action('wp_enqueue_scripts', [$this, 'register_styles']);
 			new \Expectancy\MyPlugin\Shortcode();
+			new \Expectancy\MyPlugin\Widget();
 		}
 
 		new \Expectancy\MyPlugin\Ajax();
@@ -87,7 +94,8 @@ class My_Plugin {
 		wp_register_script(
 			'my_plugin_scripts',
 			plugins_url('js/public/scripts.js', __FILE__),
-			['jquery', 'another_dependency', 'etc...']
+			['jquery' /*  , 'another_dependency', 'etc...'  */ ],
+			$this->plugin_data['Version']
 		);
 
 		// This can be moved elsewhere to conditionally load it as needed.
@@ -100,7 +108,9 @@ class My_Plugin {
 	public function register_styles() {
 		wp_register_style(
 			'my_plugin_styles',
-			plugins_url('css/public/styles.css', __FILE__)
+			plugins_url('css/public/styles.css', __FILE__),
+			array(),
+			$this->plugin_data['Version']
 		);
 
 		// This can be moved elsewhere to conditionally load it as needed.
