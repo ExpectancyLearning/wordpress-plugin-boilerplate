@@ -5,8 +5,15 @@ defined('ABSPATH') or die(__('You shall not pass!', 'my-plugin-text'));
 
 class Admin {
 
+	private $plugin_data;
+
 	public function __construct() {
+		// collect plugin data for JS and CSS file versioning
+		$this->plugin_data = get_plugin_data(__FILE__);
+
 		add_action('admin_menu', [$this, 'create_admin_menu']);
+		add_action('widgets_init', [$this, 'register_widgets']);
+
 		add_action('admin_enqueue_scripts', [$this, 'register_scripts']);
 		add_action('admin_enqueue_scripts', [$this, 'register_styles']);
 	}
@@ -46,6 +53,9 @@ class Admin {
 	 * Display the page for the first menu item.
 	 */
 	public function menu_item_1() {
+		// Conditionally load styles as needed.
+		wp_enqueue_style('my_plugin_admin_styles');
+
 		// Conditionally load scripts as needed.
 		wp_enqueue_script('my_plugin_admin_scripts');
 
@@ -59,7 +69,17 @@ class Admin {
 		// Conditionally load styles as needed.
 		wp_enqueue_style('my_plugin_admin_styles');
 
+		// Conditionally load scripts as needed.
+		wp_enqueue_script('my_plugin_admin_scripts');
+
 		require_once MY_PLUGIN_PATH . 'views/admin/page-2.php';
+	}
+
+	/**
+	 * Create widget admin form.
+	 */
+	public function register_widgets() {
+		require_once( MY_PLUGIN_PATH . 'includes/widgets/my_widget.php' );
 	}
 
 	/**
@@ -69,7 +89,8 @@ class Admin {
 		wp_register_script(
 			'my_plugin_admin_scripts',
 			MY_PLUGIN_URL . 'js/admin/core.js',
-			[ /*  'dependency1', 'dependency2', 'etc...'  */ ]
+			['jquery' /*  , 'dependency1', 'dependency2', 'etc...'  */ ],
+			$this->plugin_data['Version']
 		);
 	}
 
@@ -79,7 +100,9 @@ class Admin {
 	public function register_styles() {
 		wp_register_style(
 			'my_plugin_admin_styles',
-			MY_PLUGIN_URL . 'css/admin/styles.css'
+			MY_PLUGIN_URL . 'css/admin/styles.css',
+			array(),
+			$this->plugin_data['Version']
 		);
 	}
 }
