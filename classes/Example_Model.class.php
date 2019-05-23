@@ -4,7 +4,6 @@ namespace Expectancy\MyPlugin;
 defined('ABSPATH') or die(__('You shall not pass!', 'my-plugin-text'));
 
 class Example_Model {
-
     public $id = 0;
     public $int_column = 0;
     public $text_column = '';
@@ -13,13 +12,14 @@ class Example_Model {
     public $updated_at = '';
 
     /**
-     * Gets all models from the database;
+     * Gets all models from the database;.
+     *
      * @return array
      */
     public static function all() {
         global $wpdb;
         $table = $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE;
-        $rows = $wpdb->get_results("SELECT * FROM $table");
+        $rows = $wpdb->get_results("SELECT * FROM ${table}");
         if (empty($rows)) {
             return new \WP_Error(
                 'model_error',
@@ -31,30 +31,22 @@ class Example_Model {
         foreach ($rows as $row) {
             $models[] = self::create_from_database($row);
         }
-        return $models;
-    }
 
-    private static function create_from_database($row) {
-        $model = new self();
-        $model->id = (int) $row->id;
-        $model->int_column = (int) $row->int_column;
-        $model->text_column = stripslashes($row->text_column);
-        $model->bool_column = $row->bool_column == 1;
-        $model->created_at = $row->created_at;
-        $model->updated_at = $row->updated_at;
-        return $model;
+        return $models;
     }
 
     /**
      * Finds a single model in the database.
-     * @param  int $id Model ID.
+     *
+     * @param int $id model ID
+     *
      * @return object
      */
     public static function find($id) {
         global $wpdb;
         $table = $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE;
         $row = $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM $table
+            "SELECT * FROM ${table}
             WHERE id = %d",
             $id
         ));
@@ -65,6 +57,7 @@ class Example_Model {
                 ['status' => '404']
             );
         }
+
         return self::create_from_database($row);
     }
 
@@ -74,15 +67,43 @@ class Example_Model {
      * If the model is new and has no id, it will insert the model data into the database.
      * Otherwise, it will update the existing model based on the model's `id`.
      *
-     * @return bool|int     If the save fails, `false` will be returned. If it succeeds, the `id`
-     *                      will be returned
+     * @return bool|int If the save fails, `false` will be returned. If it succeeds, the `id`
+     *                  will be returned
      */
     public function save() {
-        $success = ($this->id == 0) ? $this->create_new_model() : $this->update_model();
-        if ($success === false) {
+        $success = (0 == $this->id) ? $this->create_new_model() : $this->update_model();
+        if (false === $success) {
             return false;
         }
+
         return $this->id;
+    }
+
+    /**
+     * Deletes a model from the database.
+     *
+     * @return bool
+     */
+    public function delete() {
+        global $wpdb;
+
+        return $wpdb->delete(
+            $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE,
+            ['id' => $this->id],
+            ['%d']
+        );
+    }
+
+    private static function create_from_database($row) {
+        $model = new self();
+        $model->id = (int) $row->id;
+        $model->int_column = (int) $row->int_column;
+        $model->text_column = stripslashes($row->text_column);
+        $model->bool_column = 1 == $row->bool_column;
+        $model->created_at = $row->created_at;
+        $model->updated_at = $row->updated_at;
+
+        return $model;
     }
 
     private function create_new_model() {
@@ -95,6 +116,7 @@ class Example_Model {
         if ($success) {
             $this->id = $wpdb->insert_id;
         }
+
         return $success;
     }
 
@@ -113,24 +135,12 @@ class Example_Model {
 
     private function update_model() {
         global $wpdb;
+
         return $wpdb->update(
             $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE,
             $this->format_data_for_saving(),
             ['id' => $this->id],
             $this->database_formats(),
-            ['%d']
-        );
-    }
-
-    /**
-     * Deletes a model from the database.
-     * @return bool
-     */
-    public function delete() {
-        global $wpdb;
-        return $wpdb->delete(
-            $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE,
-            ['id' => $this->id],
             ['%d']
         );
     }

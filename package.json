@@ -1,25 +1,63 @@
 {
-  "name": "xy-wordpress-plugin-boilerplate",
-  "author": "Expectancy Learning",
-  "license": "SEE LICENSE IN LICENSE.md",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/ExpectancyLearning/wordpress-plugin-boilerplate.git"
-  },
-  "private": true,
-  "scripts": {
-    "development": "webpack --mode=development --progress --hide-modules",
-    "production": "webpack --mode=production --progress --hide-modules",
-    "watch": "webpack --mode=development --watch --progress --hide-modules"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/preset-env": "^7.1.6",
-    "babel-loader": "^8.0.4",
-    "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2"
-  },
-  "browserslist": [
-    "IE 11"
-  ]
+    "name": "xy-wordpress-plugin-boilerplate",
+    "author": "Expectancy Learning",
+    "license": "SEE LICENSE IN LICENSE.md",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/ExpectancyLearning/wordpress-plugin-boilerplate.git"
+    },
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "webpack --mode=development --progress --hide-modules",
+        "prod": "npm run production",
+        "production": "webpack --mode=production --progress --hide-modules",
+        "watch": "webpack --mode=development --watch --progress --hide-modules"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.1.6",
+        "@babel/preset-env": "^7.1.6",
+        "babel-loader": "^8.0.4",
+        "css-loader": "^2.1.1",
+        "eslint": "^5.16.0",
+        "eslint-plugin-prettier": "^3.1.0",
+        "mini-css-extract-plugin": "^0.6.0",
+        "node-sass": "^4.12.0",
+        "prettier": "1.17.1",
+        "sass-loader": "^7.1.0",
+        "style-loader": "^0.23.1",
+        "webpack": "^4.25.1",
+        "webpack-cli": "^3.1.2"
+    },
+    "browserslist": [
+        "IE 11"
+    ],
+    "prettier": {
+        "printWidth": 120,
+        "tabWidth": 4,
+        "singleQuote": true
+    },
+    "eslintConfig": {
+        "globals": {
+            "jQuery": true
+        },
+        "env": {
+            "browser": true,
+            "commonjs": true,
+            "es6": true
+        },
+        "extends": [
+            "eslint:recommended"
+        ],
+        "parserOptions": {
+            "ecmaVersion": 2015,
+            "sourceType": "module"
+        },
+        "plugins": [
+            "prettier"
+        ],
+        "rules": {
+            "prettier/prettier": "error"
+        }
+    }
 }
