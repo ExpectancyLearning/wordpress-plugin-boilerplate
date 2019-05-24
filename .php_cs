@@ -15,6 +15,7 @@ return \PhpCsFixer\Config::create()
         'multiline_whitespace_before_semicolons' => [
             'strategy' => 'no_multi_line',
         ],
+        'ordered_class_elements' => false,
         'single_blank_line_before_namespace' => false,
     ])
     ->setFinder($finder);
