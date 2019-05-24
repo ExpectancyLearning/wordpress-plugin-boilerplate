@@ -1,7 +1,6 @@
 <?php
 $finder = \PhpCsFixer\Finder::create()
-    ->in(__DIR__)
-;
+    ->in(__DIR__);
 
 return \PhpCsFixer\Config::create()
     ->setRules([
@@ -13,7 +12,9 @@ return \PhpCsFixer\Config::create()
         'concat_space' => [
             'spacing' => 'one',
         ],
+        'multiline_whitespace_before_semicolons' => [
+            'strategy' => 'no_multi_line',
+        ],
         'single_blank_line_before_namespace' => false,
     ])
-    ->setFinder($finder)
-;
+    ->setFinder($finder);
