@@ -12,10 +12,12 @@ return \PhpCsFixer\Config::create()
         'concat_space' => [
             'spacing' => 'one',
         ],
+        'increment_style' => false,
         'multiline_whitespace_before_semicolons' => [
             'strategy' => 'no_multi_line',
         ],
         'ordered_class_elements' => false,
+        'phpdoc_summary' => false,
         'single_blank_line_before_namespace' => false,
     ])
     ->setFinder($finder);

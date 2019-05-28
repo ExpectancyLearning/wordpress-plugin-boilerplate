@@ -8,7 +8,7 @@
  * Author URI: https://www.expectancylearning.com
  * Text Domain: my-plugin-text
  * Domain Path: /languages
- * GitHub Plugin URI: https://github.com/ExpectancyLearning/wordpress-plugin-boilerplate.
+ * GitHub Plugin URI: https://github.com/ExpectancyLearning/wordpress-plugin-boilerplate
  */
 namespace Expectancy\MyPlugin;
 
