@@ -17,6 +17,7 @@ return \PhpCsFixer\Config::create()
             'strategy' => 'no_multi_line',
         ],
         'ordered_class_elements' => false,
+        'phpdoc_annotation_without_dot' => true,
         'phpdoc_no_access' => false,
         'phpdoc_no_alias_tag' => false,
         'phpdoc_no_package' => false,
