@@ -1,0 +1,62 @@
+{
+    "globals": {
+        "jQuery": true,
+        "google": true,
+        "xySystemAjax": true,
+        "xyOrgAjax": true,
+        "xyOrgTranslations": true,
+        "xyAssessmentAjax": true,
+        "xyAssessmentTranslatedText": true,
+        "xyMiscTranslations": true,
+        "xyMiscAjax": true,
+        "xyGroupSelectorRegistry": true
+    },
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:vue/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2015,
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": [
+            "error",
+            4,
+            {
+                "MemberExpression": 0,
+                "SwitchCase": 1
+            }
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "vue/html-indent": [
+            "error",
+            4
+        ],
+        "vue/html-self-closing": [
+            "error",
+            {
+                "html": {
+                    "normal": "any",
+                    "component": "any"
+                }
+            }
+        ]
+    }
+}

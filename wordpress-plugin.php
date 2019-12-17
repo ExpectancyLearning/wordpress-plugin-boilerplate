@@ -18,13 +18,13 @@ defined('ABSPATH') or die(__('You shall not pass!', 'my-plugin-text'));
 define('MY_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('MY_PLUGIN_URL', plugins_url('/', __FILE__));
 
+// If testing, set XY_SYSTEM_DEBUG to true so JS and CSS are loaded fresh every time.
+define('MY_PLUGIN_DEBUG', false);
+define('MY_PLUGIN_VERSION', get_plugin_data(__FILE__ )['Version'] . (MY_PLUGIN_DEBUG?'.'.time():''));
+
 class My_Plugin {
-    private $plugin_data;
 
     public function __construct() {
-        // collect plugin data for JS and CSS file versioning
-        $this->plugin_data = get_plugin_data(__FILE__);
-
         register_activation_hook(__FILE__, [$this, 'activate_plugin']);
         register_deactivation_hook(__FILE__, [$this, 'deactivate_plugin']);
 
@@ -94,9 +94,9 @@ class My_Plugin {
     public function register_scripts() {
         wp_register_script(
             'my_plugin_scripts',
-            plugins_url('js/public/scripts.js', __FILE__),
+            MY_PLUGIN_URL . 'js/public/scripts.js',
             ['jquery' /*  , 'another_dependency', 'etc...'  */],
-            $this->plugin_data['Version']
+            MY_PLUGIN_VERSION
         );
 
         // This can be moved elsewhere to conditionally load it as needed.
@@ -109,9 +109,9 @@ class My_Plugin {
     public function register_styles() {
         wp_register_style(
             'my_plugin_styles',
-            plugins_url('css/public/styles.css', __FILE__),
+            MY_PLUGIN_URL . 'css/public/styles.css',
             [],
-            $this->plugin_data['Version']
+            MY_PLUGIN_VERSION
         );
 
         // This can be moved elsewhere to conditionally load it as needed.

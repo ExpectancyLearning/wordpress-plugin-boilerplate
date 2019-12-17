@@ -6,8 +6,16 @@ $black: #000;
 $white: #fff;
 $gray: #cccccc;
 $light-gray: #e8e8e8;
+$extra-light-gray: #f3f3f3;
 $dark-gray: #606060;
+$medium-dark-gray: #808080;
 $inactive-bg-color: lighten($error, 40%);
+
+// custom checkboxes & radios
+$input-color: #555;
+$input-checked-color: #1e8cbe;
+$input-hover-color: #008EC2;
+$input-focus-color: #5b9dd9;
 
 // Spacing
 $gap: 1rem;

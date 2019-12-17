@@ -9,9 +9,9 @@ class Widget {
     }
 
     /**
-     * Load front side widget.
+	 * Load front side widget
      */
     public function register_widgets() {
-        require_once MY_PLUGIN_PATH . 'includes/widgets/my_widget.php';
+		require_once( MY_PLUGIN_PATH . 'includes/widgets/my_widget.php' );
     }
 }

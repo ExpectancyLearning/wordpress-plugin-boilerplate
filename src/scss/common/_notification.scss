@@ -1,0 +1,53 @@
+.xy-notification-container {
+    /*margin-bottom: $gap;*/
+}
+
+.xy-notification {
+    display: flex;
+    margin-top: $gap / 2;
+    margin-bottom: $gap / 2;
+    padding: $gap / 2;
+
+    section {
+        flex-grow: 1;
+        margin: $gap / 2;
+    }
+
+    button.xy-close {
+        border: 1px solid lighten($error, 20%);
+        border-radius: 50%;
+        height: $font-size-normal;
+        width: $font-size-normal;
+        padding: $gap / 4;
+        color: $error;
+        font-weight: bold;
+        background-color: lighten($error, 45%);
+        cursor: pointer;
+    }
+
+    button.xy-close::after {
+        content: '\00D7';
+        position: relative;
+        top: -10px;
+        left: -2px;
+        font-size: $font-size-normal;
+    }
+}
+
+.xy-notification.xy-error {
+    border: 1px solid darken($error, 10%);
+    color: $black;
+    background-color: lighten($error, 40%);
+}
+
+.xy-notification.xy-success {
+    border: 1px solid darken($success, 10%);
+    color: $black;
+    background-color: lighten($success, 40%);
+}
+
+.xy-notification.xy-info {
+    border: 1px solid darken($info, 10%);
+    color: $black;
+    background-color: $info;
+}

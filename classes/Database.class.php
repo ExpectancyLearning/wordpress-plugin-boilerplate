@@ -33,7 +33,7 @@ class Database {
         global $wpdb;
         $table_name = $wpdb->prefix . self::NOTES_TABLE;
         $charset_collate = $wpdb->get_charset_collate();
-        dbDelta("CREATE TABLE ${table_name} (
+        dbDelta("CREATE TABLE {$table_name} (
             id bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT,
             int_column int(11) UNSIGNED NOT NULL,
             text_column text NOT NULL,
@@ -41,6 +41,6 @@ class Database {
             created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
             PRIMARY KEY  (id)
-            ) ${charset_collate};");
+            ) {$charset_collate};");
     }
 }

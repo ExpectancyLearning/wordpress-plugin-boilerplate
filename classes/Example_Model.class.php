@@ -4,6 +4,7 @@ namespace Expectancy\MyPlugin;
 defined('ABSPATH') or die(__('You shall not pass!', 'my-plugin-text'));
 
 class Example_Model {
+
     public $id = 0;
     public $int_column = 0;
     public $text_column = '';
@@ -19,7 +20,7 @@ class Example_Model {
     public static function all() {
         global $wpdb;
         $table = $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE;
-        $rows = $wpdb->get_results("SELECT * FROM ${table}");
+        $rows = $wpdb->get_results("SELECT * FROM {$table}");
         if (empty($rows)) {
             return new \WP_Error(
                 'model_error',
@@ -35,6 +36,17 @@ class Example_Model {
         return $models;
     }
 
+    private static function create_from_database($row) {
+        $model = new self();
+        $model->id = (int) $row->id;
+        $model->int_column = (int) $row->int_column;
+        $model->text_column = stripslashes($row->text_column);
+        $model->bool_column = $row->bool_column == 1;
+        $model->created_at = $row->created_at;
+        $model->updated_at = $row->updated_at;
+        return $model;
+    }
+
     /**
      * Finds a single model in the database.
      *
@@ -46,7 +58,7 @@ class Example_Model {
         global $wpdb;
         $table = $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE;
         $row = $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM ${table}
+            "SELECT * FROM {$table}
             WHERE id = %d",
             $id
         ));
@@ -77,33 +89,6 @@ class Example_Model {
         }
 
         return $this->id;
-    }
-
-    /**
-     * Deletes a model from the database.
-     *
-     * @return bool
-     */
-    public function delete() {
-        global $wpdb;
-
-        return $wpdb->delete(
-            $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE,
-            ['id' => $this->id],
-            ['%d']
-        );
-    }
-
-    private static function create_from_database($row) {
-        $model = new self();
-        $model->id = (int) $row->id;
-        $model->int_column = (int) $row->int_column;
-        $model->text_column = stripslashes($row->text_column);
-        $model->bool_column = 1 == $row->bool_column;
-        $model->created_at = $row->created_at;
-        $model->updated_at = $row->updated_at;
-
-        return $model;
     }
 
     private function create_new_model() {
@@ -141,6 +126,19 @@ class Example_Model {
             $this->format_data_for_saving(),
             ['id' => $this->id],
             $this->database_formats(),
+            ['%d']
+        );
+    }
+
+    /**
+     * Deletes a model from the database.
+     * @return bool
+     */
+    public function delete() {
+        global $wpdb;
+        return $wpdb->delete(
+            $wpdb->prefix . \Expectancy\MyPlugin\Database::NAME_OF_TABLE,
+            ['id' => $this->id],
             ['%d']
         );
     }

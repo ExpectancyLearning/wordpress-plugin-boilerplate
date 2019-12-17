@@ -5,12 +5,7 @@ defined('ABSPATH') or die(__('You shall not pass!', 'my-plugin-text'));
 
 class Admin {
 
-	private $plugin_data;
-
 	public function __construct() {
-		// collect plugin data for JS and CSS file versioning
-		$this->plugin_data = get_plugin_data(__FILE__);
-
 		add_action('admin_menu', [$this, 'create_admin_menu']);
 		add_action('widgets_init', [$this, 'register_widgets']);
 
@@ -90,7 +85,7 @@ class Admin {
 			'my_plugin_admin_scripts',
 			MY_PLUGIN_URL . 'js/admin/core.js',
 			['jquery' /*  , 'dependency1', 'dependency2', 'etc...'  */ ],
-			$this->plugin_data['Version']
+			MY_PLUGIN_VERSION
 		);
 	}
 
@@ -102,7 +97,7 @@ class Admin {
 			'my_plugin_admin_styles',
 			MY_PLUGIN_URL . 'css/admin/styles.css',
 			array(),
-			$this->plugin_data['Version']
+			MY_PLUGIN_VERSION
 		);
 	}
 }

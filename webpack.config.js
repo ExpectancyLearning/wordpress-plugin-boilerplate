@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 class RemoveJSAssetsInCSSFolder {
@@ -8,8 +9,7 @@ class RemoveJSAssetsInCSSFolder {
             Object.keys(compilation.assets)
                 .filter(asset => {
                     return pattern.test(asset);
-                })
-                .forEach(asset => {
+            }).forEach(asset => {
                     delete compilation.assets[asset];
                 });
 
@@ -18,18 +18,17 @@ class RemoveJSAssetsInCSSFolder {
     }
 }
 
-module.exports = () => {
+module.exports = env => {
     const config = {
         entry: {
             '/js/admin/core': './src/js/admin/core.js',
             '/js/public/core': './src/js/public/core.js',
-
             '/css/admin/styles': './src/scss/admin/styles.scss',
-            '/css/public/styles': './src/scss/public/styles.scss'
+            '/css/public/styles': './src/scss/public/styles.scss',
         },
         output: {
             filename: '[name].js',
-            path: path.resolve(__dirname)
+            path: path.resolve(__dirname),
         },
         module: {
             rules: [
@@ -39,35 +38,36 @@ module.exports = () => {
                     use: {
                         loader: 'babel-loader',
                         options: {
-                            presets: ['@babel/preset-env']
-                        }
-                    }
+                            presets: ['@babel/preset-env'],
+                        },
+                    },
                 },
                 {
                     test: /\.(sc|sa|c)ss$/,
                     exclude: /node_modules/,
-                    use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-                }
-            ]
-        },
-        optimization: {
-            splitChunks: {
-                cacheGroups: {
-                    vendor: {
-                        chunks: 'initial',
-                        test: /[\\/]node_modules[\\/]/,
-                        name: '/js/vendor'
-                    }
-                }
-            }
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        'css-loader',
+                        'sass-loader',
+                    ],
+                },
+            ],
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: '[name].css'
+                filename: '[name].css',
             }),
-            new RemoveJSAssetsInCSSFolder()
-        ]
+            new RemoveJSAssetsInCSSFolder(),
+        ],
     };
+
+    if (process.env.NODE_ENV === 'production') {
+        config.plugins.push(new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production'),
+            }
+        }));
+    }
 
     return config;
 };
