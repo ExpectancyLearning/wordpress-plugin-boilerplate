@@ -1,7 +1,7 @@
 <?php
 namespace Expectancy;
 
-defined('ABSPATH') or die(__('You shall not pass!', 'xy-system'));
+defined('ABSPATH') or die(__('You shall not pass!', 'my-plugin-text'));
 
 class Utils {
     /**
@@ -100,7 +100,7 @@ class Utils {
     public static function verify_nonce($nonce) {
         if (!check_ajax_referer($nonce, 'nonce')) {
             wp_send_json_error([
-                'message' => __('Verification failed. Reload the page and try again.', 'xy-system'),
+                'message' => __('Verification failed. Reload the page and try again.', 'my-plugin-text'),
             ]);
         }
     }

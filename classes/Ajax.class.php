@@ -20,8 +20,6 @@ class Ajax {
 
     /**
      * Make the nonce and WP's admin AJAX url available in JavaScript files.
-     *
-     * @return [type] [description]
      */
     public function send_data() {
         $send_data = [
